@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "38fae2a7-1393-47e9-ad03-bd796af30f1a",
+		"name": "Portfolio Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22810739"
+	},
+	"item": [
+		{
+			"name": "Сheck all allowed headers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let header = pm.response.headers.get(\"Allow\"); //Забираем заголовок  Allow в переменную header",
+							"",
+							"pm.test(\"All Header Allow\", function() {",
+							"    let par = \"GET, HEAD, OPTIONS\"; //Задаем переменной par значения методов, которые разрешены для использования ",
+							"",
+							"    pm.expect(par).to.eql(header);//Сравниваем ожидаемый результат с фактическим ",
+							"});",
+							"",
+							"console.log(header);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "OPTIONS",
+				"header": [],
+				"url": {
+					"raw": "https://corona-virus-stats.herokuapp.com/api/v1/cases/general-stats",
+					"protocol": "https",
+					"host": [
+						"corona-virus-stats",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cases",
+						"general-stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Сheck status code",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://corona-virus-stats.herokuapp.com/v1/cases/general-stats",
+					"protocol": "https",
+					"host": [
+						"corona-virus-stats",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"v1",
+						"cases",
+						"general-stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "general_death_rate is less then 7",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Test name\", function () {",
+							"",
+							"let jsonData = pm.response.json(); //Помещаем в переменную jsonData весь ответ ",
+							"let data_closed = +jsonData.data.general_death_rate; //Помещаем в переменную data_closed нужный нам ключ (в данном примере general_death_rate )",
+							"let isLess; //назначаем переменную для проверки условия ",
+							"",
+							"if (data_closed < 7) { ",
+							"    isLess = true  //проверяем наше условие (general_death_rate < 7)",
+							"};",
+							"",
+							"pm.expect(isLess).to.be.true; //Если условие истинно, то тест пройден ",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://corona-virus-stats.herokuapp.com/api/v1/cases/general-stats",
+					"protocol": "https",
+					"host": [
+						"corona-virus-stats",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cases",
+						"general-stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Checking for the presence of a specific key in the response",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Check a specific keys\", function () {",
+							"",
+							"let jsonData = pm.response.json(); //Помещаем в переменную jsonData весь ответ ",
+							"let data = jsonData.data;",
+							"",
+							"pm.expect(data).to.have.any.keys(\"last_update\"); //Проверяем наличие определнного ключа в ответе (в данном случае last_update ). Тест пройден, если нужный нам ключ есть в ответе",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://corona-virus-stats.herokuapp.com/api/v1/cases/general-stats",
+					"protocol": "https",
+					"host": [
+						"corona-virus-stats",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cases",
+						"general-stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Response not empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response not empty\", function () {",
+							"",
+							"let jsonData = pm.response.json(); //Помещаем в переменную jsonData весь ответ ",
+							"let data = jsonData.data;",
+							"",
+							"pm.expect(data).not.to.be.empty; //Проверяем наличие ответа. Тест пройден, если ответ не пустой",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://corona-virus-stats.herokuapp.com/api/v1/cases/general-stats",
+					"protocol": "https",
+					"host": [
+						"corona-virus-stats",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cases",
+						"general-stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "active_cases > 10000",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = pm.response.json();",
+							"let rows = jsonData.data.rows; // Помещаем массив в переменную rows",
+							"",
+							"",
+							"rows.forEach(function(e) { // Перебираем массив ",
+							"    let par1 = e.active_cases; // Для каждого элемента массива заглядываем в active_cases",
+							"    let par2 = par1.replace(\",\", \"\"); // Убираем запятые",
+							"    let par3 = +par2; // Преобразуем строку в число ",
+							"",
+							"    tests[\"active_cases > 10000\"] = par3 > 10000; // Сравниваем active_cases с условием > 10000",
+							"",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://corona-virus-stats.herokuapp.com/api/v1/cases/countries-search",
+					"protocol": "https",
+					"host": [
+						"corona-virus-stats",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"api",
+						"v1",
+						"cases",
+						"countries-search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
